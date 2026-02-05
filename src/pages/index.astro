@@ -1,0 +1,50 @@
+---
+const title = "Sofiane Meziane | Portfolio";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem("lang");
+        const nav = (navigator.language || "").toLowerCase();
+        const preferred = saved || (nav.startsWith("fr") ? "fr" : "en");
+        const target = `/${preferred}/`;
+        if (location.pathname !== target) {
+          location.replace(target);
+        }
+      })();
+    </script>
+    <style>
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background: #f4eee2;
+        color: #0f1720;
+        padding: 3rem 1.5rem;
+      }
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-right: 1rem;
+        padding: 0.6rem 1.2rem;
+        border-radius: 999px;
+        border: 1px solid rgba(15, 23, 32, 0.2);
+        text-decoration: none;
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Choose language / Choisir la langue</h1>
+      <p>
+        <a href="/en/">English</a>
+        <a href="/fr/">Français</a>
+      </p>
+    </main>
+  </body>
+</html>

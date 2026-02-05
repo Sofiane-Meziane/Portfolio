@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  const slugs = Array.from(
+    new Set(projects.map((project) => project.slug.split("/").slice(1).join("/")))
+  );
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const slugJson = JSON.stringify(slug);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project</title>
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem("lang");
+        const nav = (navigator.language || "").toLowerCase();
+        const preferred = saved || (nav.startsWith("fr") ? "fr" : "en");
+        const slug = {slugJson};
+        const target = `/${preferred}/projects/${slug}`;
+        if (location.pathname !== target) {
+          location.replace(target);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>
+        <a href={`/en/projects/${slug}`}>English</a>
+        <a href={`/fr/projects/${slug}`}>Français</a>
+      </p>
+    </noscript>
+  </body>
+</html>

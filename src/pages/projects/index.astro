@@ -1,0 +1,30 @@
+---
+const title = "Projects";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem("lang");
+        const nav = (navigator.language || "").toLowerCase();
+        const preferred = saved || (nav.startsWith("fr") ? "fr" : "en");
+        const target = `/${preferred}/projects/`;
+        if (location.pathname !== target) {
+          location.replace(target);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p>
+        <a href="/en/projects/">English</a>
+        <a href="/fr/projects/">Français</a>
+      </p>
+    </noscript>
+  </body>
+</html>

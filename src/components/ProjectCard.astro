@@ -1,0 +1,40 @@
+---
+import { i18n, defaultLang, isLang } from "../lib/i18n";
+
+const { project, href, lang: langProp } = Astro.props;
+const lang = isLang(langProp) ? langProp : defaultLang;
+const t = i18n[lang];
+const { data } = project;
+const dateLocale = lang === "fr" ? "fr-FR" : "en-US";
+const dateLabel = new Intl.DateTimeFormat(dateLocale, {
+  year: "numeric",
+  month: "short"
+}).format(data.date);
+---
+<article class="card transition hover:-translate-y-1 hover:shadow-card">
+  <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-ink/60">
+    <span>{dateLabel}</span>
+    {data.dataset ? <span>{t.datasetLabel}: {data.dataset}</span> : null}
+  </div>
+  <h3 class="mt-4 text-2xl font-display">{data.title}</h3>
+  <p class="mt-3 text-base text-ink/80">{data.summary}</p>
+  <div class="mt-5 flex flex-wrap gap-2">
+    {data.tags.map((tag) => (
+      <span class="pill">{tag}</span>
+    ))}
+  </div>
+  <div class="mt-6 flex flex-wrap items-center gap-4 text-sm font-semibold text-sea">
+    <a href={href} class="group inline-flex items-center gap-2">
+      {t.viewProject}
+      <span class="transition group-hover:translate-x-1">-></span>
+    </a>
+    {data.repo ? (
+      <a href={data.repo} target="_blank" rel="noreferrer" class="text-ink/70 hover:text-ink">
+        {t.repoLabel}
+      </a>
+    ) : null}
+    {data.demo ? (
+      <a href={data.demo} target="_blank" rel="noreferrer" class="text-ink/70 hover:text-ink">{t.demoLabel}</a>
+    ) : null}
+  </div>
+</article>

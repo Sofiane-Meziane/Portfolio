@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ProjectCard from "../../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { i18n, defaultLang, isLang, languages } from "../../../lib/i18n";
+
+export async function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const { lang: rawLang } = Astro.params;
+const lang = isLang(rawLang) ? rawLang : defaultLang;
+const t = i18n[lang];
+
+const projects = (await getCollection("projects"))
+  .filter((project) => project.slug.startsWith(`${lang}/`))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const baseSlug = (slug) => slug.split("/").slice(1).join("/");
+---
+
+<BaseLayout lang={lang} title={`${t.projectsLabel} | ${t.siteName}`} description={t.projectsLead}>
+  <section class="pt-10">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-ink/60">{t.projectsLabel}</p>
+        <h1 class="mt-2 text-4xl font-display">{t.projectsTitle}</h1>
+      </div>
+      <p class="max-w-md text-sm text-ink/70">
+        {t.projectsLead}
+      </p>
+    </div>
+    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+      {projects.map((project) => (
+        <ProjectCard project={project} lang={lang} href={`/${lang}/projects/${baseSlug(project.slug)}`} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
