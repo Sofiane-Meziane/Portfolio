@@ -52,9 +52,7 @@ const dateLabel = new Intl.DateTimeFormat(dateLocale, {
             )}
             {project.data.demo ? (
               <a href={project.data.demo} target="_blank" rel="noreferrer">{t.demoLabel}</a>
-            ) : (
-              <span class="text-ink/50">{t.demoMissing}</span>
-            )}
+            ) : null}
           </div>
         </div>
         <div class="card">

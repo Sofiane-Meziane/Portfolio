@@ -45,7 +45,7 @@ export const i18n = {
     repoLabel: "Repository",
     repoMissing: "Repository coming soon",
     demoLabel: "Live demo",
-    demoMissing: "Demo coming soon",
+
     tagsLabel: "Tags",
     datasetLabel: "Dataset",
     viewProject: "View project",
@@ -93,7 +93,7 @@ export const i18n = {
     repoLabel: "Dépôt",
     repoMissing: "Dépôt bientôt disponible",
     demoLabel: "Démo en ligne",
-    demoMissing: "Démo bientôt disponible",
+
     tagsLabel: "Tags",
     datasetLabel: "Jeu de données",
     viewProject: "Voir le projet",
