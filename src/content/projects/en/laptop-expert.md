@@ -1,28 +1,45 @@
 ---
 title: "Laptop Expert AI"
 date: "2026-02-04"
-summary: "Streamlit app that classifies laptops by type and estimates market price from hardware specs."
-tags: ["Machine Learning", "Classification", "Regression", "Streamlit", "Scikit-learn"]
-dataset: "Laptop Prices (Kaggle, 2017-2018)"
+summary: "Advanced Machine Learning system capable of classifying laptops and estimating market prices with high precision using Random Forest and Ridge Regression."
+tags: ["Machine Learning", "Random Forest", "Ridge Regression", "Streamlit", "Feature Engineering", "Python"]
+dataset: "Laptop Prices (Kaggle)"
 repo: "https://github.com/Sofiane-Meziane/LaptopExpert"
 demo: "https://laptopexpert-hw7h2dv9gv9otssw7e74hn.streamlit.app/"
 featured: true
 ---
 
-## Summary
-Laptop price estimation and laptop type classification with a Streamlit web interface. The system predicts the laptop category and its market price from hardware specifications.
+## Project Overview
+Laptop Expert is a dual-purpose Machine Learning application designed to assist users in understanding laptop tiers and market value. It combines a classification engine to identify laptop categories (e.g., Gaming, Ultrabook, Workstation) and a regression engine to predict market prices based on hardware specifications.
 
-## Problem
-Given CPU, GPU, RAM, storage, screen size, and other specs, predict the laptop type (Gaming, Ultrabook, Workstation, etc.) and estimate its price in euros.
+## The Challenge
+The laptop market is saturated with varying configurations, making it difficult for consumers to assess fair value or identify the right category for their needs. The goal was to build a system that could:
+1.  **Classify** a laptop into its correct market segment based on specs.
+2.  **Estimate** the fair market price ($) given a set of features.
 
-## Approach
-- Trained a Random Forest classifier for the TypeName prediction with SMOTE for class imbalance.
-- Trained a Ridge regression model on log-price with 5-fold cross validation.
-- Built an interactive Streamlit UI that loads the trained models and encoders.
+## Technical Approach
 
-## Results
-- Classification accuracy: 84.31%.
-- Price regression R2: about 0.86 on the test set.
+### 1. Data Engineering & Analysis
+-   **Exploratory Data Analysis (EDA):** Analyzed distributions (Log-Normal price distribution) and correlations using **Seaborn** and **Matplotlib**.
+-   **Feature Engineering:** Created new features like **PPI (Pixels Per Inch)** from screen resolution and size to better capture display quality value.
+-   **Preprocessing:** Implemented **OneHotEncoding** for categorical variables and **StandardScaler** for numerical normalization.
 
-## Visuals
-Add screenshots of the Streamlit UI and model evaluation charts.
+### 2. Machine Learning Models
+-   **Classification (Laptop Type):**
+    -   Handled significant class imbalance using **SMOTE (Synthetic Minority Over-sampling Technique)**.
+    -   Trained a **Random Forest Classifier** which outperformed KNN, demonstrating superior ability to handle non-linear relationships between hardware specs and categories.
+    -   **Performance:** Achieved an **Accuracy of 84.31%**.
+
+-   **Regression (Price Estimation):**
+    -   Modeled the target variable using **Log-transformation** to normalize price distribution.
+    -   Utilized **Ridge Regression (L2 Regularization)** to handle multicollinearity among hardware features.
+    -   Optimized hyperparameters (Alpha) via **GridSearchCV** with 5-fold cross-validation.
+    -   **Performance:** Achieved an **R² Score of ~0.86** and a Mean Absolute Error (MAE) of ~199€.
+
+### 3. Deployment
+-   Developed an interactive web interface using **Streamlit**.
+-   Integrated the trained models and preprocessors for real-time inference.
+
+## Key Results
+-   **84.3% Classification Accuracy**: Effectively distinguishes between specialized categories like Workstations and standard Notebooks.
+-   **0.86 R² Score**: providing reliable price estimates within a competitive error margin.
