@@ -59,31 +59,37 @@ const nav = [
         <div class="absolute inset-0 grid-lines"></div>
       </div>
 
-      <header class="relative z-10">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-          <a href={`/${lang}/`} class="font-display text-xl tracking-tight">{t.siteName}</a>
-          <nav class="flex items-center gap-6 text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">
+      <header class="relative z-20">
+        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-8">
+          <a href={`/${lang}/`} class="font-display text-2xl font-bold tracking-tight text-ink">{t.siteName}</a>
+          <nav class="flex items-center gap-6 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-ink/60">
             {nav.map((item) => (
               <a
                 href={item.href}
-                class="transition hover:text-ink"
+                class="transition hover:text-ink hover:translate-y-[-1px]"
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noreferrer" : undefined}
               >
                 {item.label}
               </a>
             ))}
-            <button
-              type="button"
-              class="theme-toggle"
-              data-light-label={t.themeLightLabel}
-              data-dark-label={t.themeDarkLabel}
-              data-light-aria={t.themeLightAria}
-              data-dark-aria={t.themeDarkAria}
-            ></button>
-            <a href={switchHref} class="lang-toggle" aria-label={t.toggleAria}>
-              {t.toggleLabel}
-            </a>
+            <div class="flex items-center gap-3 ml-2 border-l border-ink/10 pl-5">
+              <button
+                type="button"
+                class="theme-toggle"
+                aria-label={t.themeDarkAria}
+              >
+                <svg class="sun-icon hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                </svg>
+                <svg class="moon-icon hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </button>
+              <a href={switchHref} class="lang-toggle" aria-label={t.toggleAria}>
+                {lang === "fr" ? "EN" : "FR"}
+              </a>
+            </div>
           </nav>
         </div>
       </header>
@@ -92,8 +98,8 @@ const nav = [
         <slot />
       </main>
 
-      <footer class="relative z-10 border-t border-ink/10">
-        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm text-ink/70">
+      <footer class="relative z-10 border-t border-ink/5 mt-20">
+        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-10 text-xs font-medium text-ink/50 tracking-wide">
           <span>{t.footerBuilt}</span>
           <span>{t.footerUpdated}</span>
         </div>
@@ -112,15 +118,19 @@ const nav = [
         const root = document.documentElement;
         const button = document.querySelector(".theme-toggle");
         if (!button) return;
-        const lightLabel = button.getAttribute("data-light-label") || "Light";
-        const darkLabel = button.getAttribute("data-dark-label") || "Dark";
-        const lightAria = button.getAttribute("data-light-aria") || "Switch to light mode";
-        const darkAria = button.getAttribute("data-dark-aria") || "Switch to dark mode";
+        
+        const sunIcon = button.querySelector(".sun-icon");
+        const moonIcon = button.querySelector(".moon-icon");
 
         const applyTheme = (theme) => {
           root.dataset.theme = theme;
-          button.textContent = theme === "dark" ? lightLabel : darkLabel;
-          button.setAttribute("aria-label", theme === "dark" ? lightAria : darkAria);
+          if (theme === "dark") {
+            sunIcon.classList.remove("hidden");
+            moonIcon.classList.add("hidden");
+          } else {
+            sunIcon.classList.add("hidden");
+            moonIcon.classList.remove("hidden");
+          }
           button.setAttribute("data-theme", theme);
         };
 
@@ -131,12 +141,8 @@ const nav = [
           // ignore
         }
 
-        if (!root.dataset.theme) {
-          const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-          applyTheme(stored || (prefersDark ? "dark" : "light"));
-        } else {
-          applyTheme(root.dataset.theme);
-        }
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(stored || (prefersDark ? "dark" : "light"));
 
         button.addEventListener("click", () => {
           const next = root.dataset.theme === "dark" ? "light" : "dark";
