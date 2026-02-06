@@ -77,6 +77,34 @@ const baseSlug = (slug) => slug.split("/").slice(1).join("/");
     </div>
   </section>
 
+  <section id="about" class="mt-24 mb-10 animate-fade-up animate-fade-up-2">
+    <div class="grid gap-8 lg:grid-cols-2">
+      <div class="glass p-8">
+        <h2 class="text-3xl font-display mb-6">{t.aboutTitle}</h2>
+        <p class="text-lg text-ink/80 leading-relaxed">
+          {t.aboutBio}
+        </p>
+      </div>
+      <div class="glass p-8">
+        <h2 class="text-3xl font-display mb-6">{t.eduTitle}</h2>
+        <div class="space-y-8">
+          <div class="relative pl-8 border-l border-ink/10">
+            <div class="absolute -left-1.5 top-2 h-3 w-3 rounded-full bg-sea"></div>
+            <h3 class="text-xl font-bold">{t.eduMasterTitle}</h3>
+            <span class="text-sm font-mono text-ink/60">{t.eduMasterDate}</span>
+            <p class="mt-2 text-ink/80">{t.eduMasterDesc}</p>
+          </div>
+          <div class="relative pl-8 border-l border-ink/10">
+            <div class="absolute -left-1.5 top-2 h-3 w-3 rounded-full bg-ink/30"></div>
+            <h3 class="text-xl font-bold">{t.eduLicenceTitle}</h3>
+            <span class="text-sm font-mono text-ink/60">{t.eduLicenceDate}</span>
+            <p class="mt-2 text-ink/80">{t.eduLicenceDesc}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   {featured.length > 0 && (
     <section class="mt-16 animate-fade-up animate-fade-up-2">
       <div class="flex items-end justify-between">
@@ -105,6 +133,23 @@ const baseSlug = (slug) => slug.split("/").slice(1).join("/");
       {latest.map((project) => (
         <ProjectCard project={project} lang={lang} href={`/${lang}/projects/${baseSlug(project.slug)}`} />
       ))}
+    </div>
+    </div>
+  </section>
+
+  <section id="contact" class="mt-20 mb-10 animate-fade-up animate-fade-up-3">
+    <div class="glass p-8 text-center">
+      <p class="text-xs uppercase tracking-[0.2em] text-ink/60">{t.navContact}</p>
+      <h2 class="mt-4 text-3xl font-display">{t.contactTitle}</h2>
+      <p class="mt-4 text-lg text-ink/80">{t.contactBody}</p>
+      <div class="mt-8 flex justify-center gap-6">
+        <a
+          href={`mailto:${t.contactEmail}`}
+          class="inline-flex items-center gap-2 rounded-full bg-ink px-8 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-paper transition hover:-translate-y-0.5"
+        >
+          Email
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
