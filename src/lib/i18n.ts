@@ -49,8 +49,8 @@ export const i18n = {
     tagsLabel: "Tags",
     datasetLabel: "Dataset",
     viewProject: "View project",
-    footerBuilt: "Built with Astro and Markdown.",
-    footerUpdated: "Last updated: 2026"
+    footerCopyright: "© 2026 Sofiane Meziane",
+    footerRights: "All rights reserved."
   },
   fr: {
     siteName: "Sofiane Meziane",
@@ -97,7 +97,7 @@ export const i18n = {
     tagsLabel: "Tags",
     datasetLabel: "Jeu de données",
     viewProject: "Voir le projet",
-    footerBuilt: "Construit avec Astro et Markdown.",
-    footerUpdated: "Dernière mise à jour : 2026"
+    footerCopyright: "© 2026 Sofiane Meziane",
+    footerRights: "Tous droits réservés."
   }
 } as const;
